@@ -1,5 +1,6 @@
 #第一步导入flask模块
 from flask import Flask
+import redis
 
 #第二步是取名
 app = Flask(__name__)
@@ -13,5 +14,5 @@ def index():
 ## 第四步,主函数
 
 if __name__ == "__main__":
-
-    app.run()
+    
+    app.run(debug=True)
