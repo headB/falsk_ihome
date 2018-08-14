@@ -40,5 +40,6 @@ def create_app(config_name):
     CSRFProtect(app)
 
     #注册蓝图
+    app.register_blueprint(api_1_0.api, url_prefix='/api/v1.0')
 
     return app
