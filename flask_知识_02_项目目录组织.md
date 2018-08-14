@@ -86,4 +86,18 @@
         这样就可以引起循环导包了.为什么??看下来讲解.
         1. 因为在demo.py文件和ihome的init文件永远在互相导入而没有去执行db这个.
     2. ### 推迟导入   解决办法就是,什么时候用就什么时候导入!
+9. # 一般来说,会有两个文件夹.
+    1. utils   这个文件夹代表是工具类
+    2. libs 引用第三方工具包的存放位置
 
+10. # 日志功能
+    1. import logging
+        1. 4种等级
+            2. logging.error("String you like want to write") 是一个函数.
+            3. logging.wran()
+            4. logging.info()
+            5. logging.debug()
+    2. 设置方法
+        1. logging.basecConfig(level=logging.DEBUG)
+        ...............
+    3. 
