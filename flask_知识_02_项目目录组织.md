@@ -43,6 +43,10 @@
 
 5. ## sqlalchemy实质是独立的python操作数据库的python库.
     1. 然而在flask中,为了方便使用,被封装成为flask_sqlalchemy.
+    2. ### 数据库添加密码转义,python使用urllib.parse里面的unquote_plus
 
-6. 简单创建一个模型类先.
-    1. 
+6. 为flask添加redis
+7. 添加csrf防护 
+    1. 实质里面,用的就是装饰器.
+
+8. 配置session,使用redis作为缓存保存数据.!
