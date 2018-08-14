@@ -22,7 +22,7 @@
             DEBUG = True
             SECRET_KEY = "as&^*^&%(*&)(*hhuoioih)"
             #数据库
-            SQLALCHEMY_DATABASE_URL = "mysql://root:kumanxuan123:3306:ihome"
+            SQLALCHEMY_DATABASE_URI = "mysql://root:kumanxuan123:3306:ihome"
             SQLALCHEMY_TRACK_MODIFICATIONS = True
 
         app.config.from_object(Config)
@@ -40,3 +40,9 @@
         #创建redis连接对象
         redis_store = redis.StrictRedis(host=localhost,port=6379,)
     ```
+
+5. ## sqlalchemy实质是独立的python操作数据库的python库.
+    1. 然而在flask中,为了方便使用,被封装成为flask_sqlalchemy.
+
+6. 简单创建一个模型类先.
+    1. 
