@@ -100,4 +100,9 @@
     2. 设置方法
         1. logging.basecConfig(level=logging.DEBUG)
         ...............
-    3. 
+    3. ## 日志级别的说明
+        1. 原来,debug级别是包括了info,wran,和error级别.
+        2. 然后info包括以前三个.以此类推.!
+    4. ## 手动设置日志信息
+        1. from flask import current_app
+        2. current_app.logger.error("error message")
