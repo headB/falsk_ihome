@@ -4,7 +4,7 @@ from flask_wtf import CSRFProtect
 from config import config_map
 from flask_sqlalchemy import SQLAlchemy
 import redis
-from ihome import api_1_0
+
 
 #数据库
 db = SQLAlchemy()
@@ -40,6 +40,7 @@ def create_app(config_name):
     CSRFProtect(app)
 
     #注册蓝图
+    from ihome import api_1_0
     app.register_blueprint(api_1_0.api, url_prefix='/api/v1.0')
 
     return app
