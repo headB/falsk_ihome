@@ -34,10 +34,10 @@
                 self.regex = regex
         ```
     4. 然后在ihome的init文件里面导入.
-        ```pyhton
+        ```python
         #为flask添加自定义的转换器
         app.url_map.converters['re'] = ReConverter
-         #注册提供静态文件的蓝图
+        #注册提供静态文件的蓝图
         from ihome import web_html
         app.register_blueprint(web_html.html)
         return app
