@@ -106,3 +106,5 @@
     4. ## 手动设置日志信息
         1. from flask import current_app
         2. current_app.logger.error("error message")
+    5. ## 注意了,原来如果配置文件当前选择的是DEBUG模式的话,你前面设置的等级全部都是DEBUG,意思是全部信息都输出.!
+11. 
