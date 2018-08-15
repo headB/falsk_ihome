@@ -85,5 +85,5 @@
 # 如何设置csrf防护
 1. 看情况
     1. 前后端不分离,直接在模板植入csrf_token()就可以了!
-        1. 
-    2. 
+
+# send_static_file
