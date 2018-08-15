@@ -7,6 +7,7 @@ from flask import current_app, jsonify, make_response
 from ihome.utils.response_code import RET
 
 
+
 # GET 127.0.0.1/api/v1.0/image_codes/<image_code_id>
 @api.route("/image_codes/<image_code_id>")
 def get_image_code(image_code_id):
