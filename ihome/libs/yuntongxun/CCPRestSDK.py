@@ -255,7 +255,8 @@ class REST:
     
         header = {
             "Authorization":auth,
-            "Content-type":'json',
+            "Content-Type":'application/json;charset=utf-8',
+            "Accept":"application/json",
         }
         
         b='['
@@ -267,20 +268,14 @@ class REST:
         data=''
         try:
             res = requests.post(url=url,headers=header,data=body)
-            print(res)
-            print(res.content.decode())
-        
-            if self.BodyType=='json':
-                #json格式
-                locations = json.loads(data)
-            else:
-                #xml格式
-                xtj=xmltojson()
-                locations=xtj.main(data)
-            if self.Iflog:
-                self.log(url,body,data)
+            
+            res_code = res.content.decode()
+            
+            locations = json.loads(res_code)
+            
             return locations
         except Exception as  error:
+            print(error)
             if self.Iflog:
                 self.log(url,body,data)
             return {'172001':'网络错误'}
