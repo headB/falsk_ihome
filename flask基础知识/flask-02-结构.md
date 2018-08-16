@@ -368,3 +368,6 @@ url\_for会根据传入的路由器函数名,返回该路由对应的URL,在模�
 	{%for message in get_flashed_messages()%}
 		{{message}}
 	{%endfor%}
+
+
+

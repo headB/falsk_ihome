@@ -83,9 +83,36 @@
 # 开发流程与接口文档编写
 1. 分析需求
 2. 编写代码
-3. 单元测试(YES,终于可以做了.....)
-4. 
+3. 单元测试(YES,终于可以做了.....)最后再讲!.
+4. 自测 ?
+5. 编写接口文档
+    1. 接口的名字 提供图片验证码
+        ```python
+        
+        ```
+    2. 描述信息(描述清楚接口的功能)
+    3. 传入参数
+    4. 返回值
+    5. 举例
+    ```python
+    接口: 获取图片验证码
+    描述: 前端访问,可以获取到验证码图片
 
+    url: /api/v1.0/image_codes/<image_code_id>
+
+    参数参数:
+        格式:参数是查询字符串,请求体的表单,json,xml
+        名字            类型      是否必须      说明
+        image_code_id   字符串      是          验证图片的编码
+    返回值:
+        格式:     正常:图片, 异常:json
+        名字        类型        是否必传        说明
+        errno       字符串         否           错误代码
+        errmsg      字符串         否           错误内容
+
+    实例:xx
+    '{"errno":"4001","errmsg":"保存图片验证码失败"}'
+    ```
 # 单元测试
 1. 为什么需要测试?
     1. 一个完整的开发过程包括这几个阶段
@@ -98,3 +125,94 @@
     2. 集成测试
     3. 系统测试
 3. 与程序开发人员最密切的就是单元测试
+4. ## 关于更多的整理好的资料,请参考本文件夹里面的<flask基础知识>
+5. ## 用自己的话来表达<单元测试>,就是,把测试的过程记录下来,就是单元测试.!
+6. ## assert 断言
+    1. 代码
+        ```python
+        def num_div(num1,num2):
+            assert isinstance(num1, int)
+            assert isinstance(num2, int)
+        
+        print(num1/num2)
+
+        if __name__ == '__main__':
+            num_div(100,"b")
+        ```
+    2. ## 平时判断是用if,现在还可以用断言,assert
+    3. ## 单元测试
+        1. 代码
+            ```python
+            import unittest
+            class TestClass(unittest.TestCase):
+
+                #该方法会首先执行,相当于做测试钱的准备工作
+                def setUp(self):
+                    pass
+                #该方法会在测试代码执行完后执行,相当于做测试后的扫尾工作
+                def tearDown(self):
+                    pass
+                #测试代码
+                #这部分定义的方法,前缀必须是test_这样的形式.!
+                def test_app_exist(self):
+                    pass
+
+            ```
+        2. ### 测试案例图片,请参考有道云笔记的截图,8月16日
+            1. 构造测试请求,使用requests,urllib等等.
+            2. #### flask 提供客户端
+                1. from login import app
+                2. 创建进行web请求的客户端,
+                ```python
+                1. client = app.test_client()
+                ```
+                3. 利用client客户端,模拟发送请求
+                    1. ret = client.post("/login",data={})
+                    2. ret是视图返回的响应对象
+                    ```python
+                    resp = ret.data #data是响应体的数据
+                    ```
+                    3. 因为login视图返回的是json字符串
+                    ```python
+                    resp = json.loads(resp)
+                    ```
+                    4. 拿到返回值进行断言测试
+                    ```python
+                    self.assertIn("code",resp)
+                    self.assertEqual(resp['code'],1)
+
+                    #调用
+                    if __name__ == '__main__':
+                        unittest.main()
+                    ```
+                4. 里面的截图例子分别是用pycharm的测试和自己运行test.py模块,都有.
+            3. ## 单元测试,有一个特殊用法,setup
+                1. 意思:在执行测试案例之前,先执行这一步.!初始化的东西.!
+            4. ## 测试模式
+                1. 设置 app.config["TESTING"] = True
+                2. 开启以后,可以知道具体发生错误的位置发生在那个位置.
+
+        3. ### 这个模拟提交请求,然后把返回结果对比之后,进行判断.!
+            1. 但是,有意义吗?
+            2. #### 需要去了解自动测试的东东.!
+            3. 自動軟體測試、TDD 與 BDD
+                1. https://medium.com/@yurenju/%E8%87%AA%E5%8B%95%E8%BB%9F%E9%AB%94%E6%B8%AC%E8%A9%A6-tdd-%E8%88%87-bdd-464519672ac5
+                2. https://www.zhihu.com/question/49530527
+                3. 
+
+
+# 编写前端去用接口!
+1. 生成一个边好
+    1. 时间戳
+    2. uuid(全局唯一标识符)
+
+# 数据库测试
+1. 首先打开app的测试,
+    ```python
+    app.testing = True
+    ```
+2. 然后导入指定的model类.
+    1. 例子,from author_book import Author,db,app
+3. ## setUp上面的这些操作,会在特殊函数,setUp函数里面提前加入参数,
+    1. ## 测试ING.还有具体说明一下,就是前面加入的参数,包括了加入了数据库的地址,到时候测试的时候,也不会用到什么真的数据!.
+4. ##tearDown 结尾.!
