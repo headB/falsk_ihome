@@ -72,3 +72,11 @@
     6. 406 用户请求格式错误
     7. 500 服务器发生错误
 8. 响应结果
+
+
+# 使用captcha
+1. 在python3里面出现了问题,TypeError: string argument expected, got 'bytes' 
+    https://blog.csdn.net/yu599207582/article/details/59109815
+    1. 解决办法:
+        1. 把StringIO替换成为BytesIO
+
