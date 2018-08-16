@@ -10,13 +10,16 @@
     #  in the file PATENTS.  All contributing project authors may
     #  be found in the AUTHORS file in the root of the source tree.
 
-import md5
+from  hashlib import md5
+import hashlib
 import base64
 import datetime
-import urllib2
+import urllib as urllib2
+from  urllib import request
 import json
 from xmltojson import xmltojson
-from xml.dom import minidom 
+from xml.dom import minidom
+import requests
 
 class REST:
     
@@ -122,7 +125,7 @@ class REST:
             if self.Iflog:
                 self.log(url,body,data)
             return locations
-        except Exception, error:
+        except Exception as  error:
             if self.Iflog:
                 self.log(url,body,data)
             return {'172001':'网络错误'}
@@ -172,7 +175,7 @@ class REST:
             if self.Iflog:
                 self.log(url,body,data)
             return locations
-        except Exception, error:
+        except Exception as error:
             if self.Iflog:
                 self.log(url,body,data)
             return {'172001':'网络错误'}
@@ -223,7 +226,7 @@ class REST:
             if self.Iflog:
                 self.log(url,body,data)
             return locations
-        except Exception, error:
+        except Exception as error:
             if self.Iflog:
                 self.log(url,body,data)
             return {'172001':'网络错误'}
@@ -239,36 +242,33 @@ class REST:
         self.Batch = nowdate.strftime("%Y%m%d%H%M%S")
         #生成sig
         signature = self.AccountSid + self.AccountToken + self.Batch;
-        sig = md5.new(signature).hexdigest().upper()
+        
+        sig = hashlib.new('md5',signature.encode()).hexdigest().upper()
         #拼接URL
         url = "https://"+self.ServerIP + ":" + self.ServerPort + "/" + self.SoftVersion + "/Accounts/" + self.AccountSid + "/SMS/TemplateSMS?sig=" + sig
         #生成auth
-        src = self.AccountSid + ":" + self.Batch;
+        src = self.AccountSid + ":" + self.Batch
+        src = src.encode()
         auth = base64.encodestring(src).strip()
-        req = urllib2.Request(url)
-        self.setHttpHeader(req)
-        req.add_header("Authorization", auth)
         #创建包体
         b=''
-        for a in datas:
-            b+='<data>%s</data>'%(a)
+    
+        header = {
+            "Authorization":auth,
+            "Content-type":'json',
+        }
         
-        body ='<?xml version="1.0" encoding="utf-8"?><SubAccount><datas>'+b+'</datas><to>%s</to><templateId>%s</templateId><appId>%s</appId>\
-            </SubAccount>\
-            '%(to, tempId,self.AppId)
-        if self.BodyType == 'json':   
-            # if this model is Json ..then do next code
-            b='['
-            for a in datas:
-                b+='"%s",'%(a) 
-            b+=']'
-            body = '''{"to": "%s", "datas": %s, "templateId": "%s", "appId": "%s"}'''%(to,b,tempId,self.AppId)
-        req.add_data(body)
+        b='['
+        for a in datas:
+            b+='"%s",'%(a) 
+        b+=']'
+        body = '''{"to": "%s", "datas": %s, "templateId": "%s", "appId": "%s"}'''%(to,b,tempId,self.AppId)
+        
         data=''
         try:
-            res = urllib2.urlopen(req);
-            data = res.read()
-            res.close()
+            res = requests.post(url=url,headers=header,data=body)
+            print(res)
+            print(res.content.decode())
         
             if self.BodyType=='json':
                 #json格式
@@ -280,7 +280,7 @@ class REST:
             if self.Iflog:
                 self.log(url,body,data)
             return locations
-        except Exception, error:
+        except Exception as  error:
             if self.Iflog:
                 self.log(url,body,data)
             return {'172001':'网络错误'}
@@ -342,7 +342,7 @@ class REST:
             if self.Iflog:
                 self.log(url,body,data)
             return locations
-        except Exception, error:
+        except Exception as  error:
             if self.Iflog:
                 self.log(url,body,data)
             return {'172001':'网络错误'}
@@ -399,7 +399,7 @@ class REST:
             if self.Iflog:
                 self.log(url,body,data)
             return locations
-        except Exception, error:
+        except Exception as  error:
             if self.Iflog:
                 self.log(url,body,data)
             return {'172001':'网络错误'}
@@ -445,7 +445,7 @@ class REST:
             if self.Iflog:
                 self.log(url,body,data)
             return locations
-        except Exception, error:
+        except Exception as  error:
             if self.Iflog:
                 self.log(url,body,data)
             return {'172001':'网络错误'}
@@ -497,7 +497,7 @@ class REST:
             if self.Iflog:
                 self.log(url,body,data)
             return locations
-        except Exception, error:
+        except Exception as  error:
             if self.Iflog:
                 self.log(url,body,data)
             return {'172001':'网络错误'}
@@ -537,7 +537,7 @@ class REST:
             if self.Iflog:
                 self.log(url,body,data)
             return locations
-        except Exception, error:
+        except Exception as  error:
             if self.Iflog:
                 self.log(url,body,data)
             return {'172001':'网络错误'}
@@ -587,7 +587,7 @@ class REST:
             if self.Iflog:
                 self.log(url,body,data)
             return locations
-        except Exception, error:
+        except Exception as  error:
             if self.Iflog:
                 self.log(url,body,data)
             return {'172001':'网络错误'}
@@ -629,7 +629,7 @@ class REST:
             if self.Iflog:
                 self.log(url,body,data)
             return locations
-        except Exception, error:
+        except Exception as  error:
             if self.Iflog:
                 self.log(url,body,data)
             return {'172001':'网络错误'}
@@ -680,7 +680,7 @@ class REST:
             if self.Iflog:
                 self.log(url,body,data)
             return locations
-        except Exception, error:
+        except Exception as  error:
             if self.Iflog:
                 self.log(url,body,data)
             return {'172001':'网络错误'}
@@ -732,7 +732,7 @@ class REST:
             if self.Iflog:
                 self.log(url,body,data)
             return locations
-        except Exception, error:
+        except Exception as  error:
             if self.Iflog:
                 self.log(url,body,data)
             return {'172001':'网络错误'}
@@ -769,7 +769,7 @@ class REST:
             print('172004');
             print('IP为空');
         
-        if(self.ServerPort<=0):
+        if(int(self.ServerPort)<=0):
             print('172005');
             print('端口错误（小于等于0）');
         

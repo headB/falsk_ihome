@@ -1,20 +1,14 @@
-#coding=gbk
-
-#coding=utf-8
-
-#-*- coding: UTF-8 -*-  
-
 from CCPRestSDK import REST
-import ConfigParser
+
 
 #主帐号
-accountSid= '您的主帐号';
+accountSid= '8aaf0708654176180165421b0eab0022';
 
 #主帐号Token
-accountToken= '您的主帐号Token';
+accountToken= '12b58f4e0dab44bbbfd73cd52fa4ae11';
 
 #应用Id
-appId='您的应用ID';
+appId='8aaf0708654176180165421b0f0c0029';
 
 #请求地址，格式如下，不需要写http://
 serverIP='app.cloopen.com';
@@ -32,34 +26,33 @@ softVersion='2013-12-26';
 
 class CCP:
     """自己封装的发送短信的辅助类"""
+    tag = None
+
+    def __new__(cls):
+        if cls.tag is None:
+            
+            cls.tag =  super().__new__(cls)
+            cls.tag.rest = REST(serverIP,serverPort,softVersion)
+            cls.tag.rest.setAccount(accountSid,accountToken)
+            cls.tag.rest.setAppId(appId)
+        
+        return cls.tag
+
     def send_template_sms(self,to,datas,temp_id):
-        for k,v in result.iteritems(): 
-        
-        if k=='templateSMS' :
-                for k,s in v.iteritems(): 
-                    print '%s:%s' % (k, s)
-        else:
-            print '%s:%s' % (k, v)
 
-cpp = CPP()
+        result = self.rest.sendTemplateSMS(to,datas,temp_id)
+        for k,v in result.iteritems():
+            if k=='templateSMS' :
+                    for k,s in v.iteritems(): 
+                        print ('%s:%s')%(k, s)
+            else:
+                print ('%s:%s')%(k, v)
 
 
-def sendTemplateSMS(to,datas,tempId):
-
-    
     #初始化REST SDK
-    rest = REST(serverIP,serverPort,softVersion)
-    rest.setAccount(accountSid,accountToken)
-    rest.setAppId(appId)
     
-    result = rest.sendTemplateSMS(to,datas,tempId)
-    for k,v in result.iteritems(): 
-        
-        if k=='templateSMS' :
-                for k,s in v.iteritems(): 
-                    print '%s:%s' % (k, s)
-        else:
-            print '%s:%s' % (k, v)
-    
-   
 #sendTemplateSMS(手机号码,内容数据,模板Id)
+if __name__ == "__main__":
+    cpp = CCP()
+    #id是魔板
+    cpp.send_template_sms("13249700923",["hello_world","10"],1)
