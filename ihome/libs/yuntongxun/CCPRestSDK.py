@@ -17,8 +17,8 @@ import datetime
 import urllib as urllib2
 from  urllib import request
 import json
-from xmltojson import xmltojson
-from xml.dom import minidom
+# from xmltojson import xmltojson
+# from xml.dom import minidom
 import requests
 
 class REST:

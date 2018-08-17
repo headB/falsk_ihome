@@ -1,4 +1,4 @@
-from CCPRestSDK import REST
+from .CCPRestSDK import REST
 
 
 #主帐号
@@ -41,12 +41,18 @@ class CCP:
     def send_template_sms(self,to,datas,temp_id):
 
         result = self.rest.sendTemplateSMS(to,datas,temp_id)
-        for k,v in result.items():
-            if k=='templateSMS' :
-                    for k,s in v.items(): 
-                        print ("%s:%s"%(k, s))
-            else:
-                print ("%s:%s"%(k, v))
+        # for k,v in result.items():
+        #     if k=='templateSMS' :
+        #             for k,s in v.items(): 
+        #                 print ("%s:%s"%(k, s))
+        #     else:
+        #         print ("%s:%s"%(k, v))
+        status_code = result.get('statusCode')
+        if status_code == "000000":
+            #表示发送成功
+            return 0
+        else:
+            return -1
 
 
     #初始化REST SDK
@@ -56,3 +62,4 @@ if __name__ == "__main__":
     cpp = CCP()
     #id是魔板
     cpp.send_template_sms("13249700923",["hello_world","10"],1)
+

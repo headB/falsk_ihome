@@ -25,3 +25,38 @@
     4. 这...传智介绍的短信.....太烂了....都是基于python2的....意思是,我得精通python3..太好了.当做练习.!
 7. python3里面,不建议使用urllib了.
 8. python3里面,字典取消了iteritems(),直接被items()取缔了.!
+
+# 路由url地址转化原来就叫过滤器.
+
+1. 这是是关于简书的一遍文章,说的就是转换器.
+    https://www.jianshu.com/p/ce3028e9546e
+2. ## 在flask中使用jsonify和json.dumps的区别
+    https://blog.csdn.net/Duke_Huan_of_Qi/article/details/76064225
+    1. 所以说,在flask中的话,就尽量多用jsonify.
+3. ## 获取get过来的参数
+    1. 写法是 xx = request.args.get("xxx")
+    2. 然后使用if not all(['xx','yy'])
+    3. 然后我观察了一下路由和函数的关系
+    ```python
+    @api.route("/sms_codes/<re(r'1[34578]\d{9}'):mobile>")
+    def get_sms_code(mobile):
+    ```
+    > 恩恩,顾名思义
+4. ## 看一下flask操作数据库先!
+    1. ### 从redis获取str类型数据
+    ```python
+        redis_store.get('xxx')
+    ```
+    2. ### 如果发生错误,调用当前的 currect_app.logger.error(e)
+    3. 记得经常返回json数据的话,用 return jsonify
+    4. ### 获取模型类的数据
+    ```python
+    from models import xxx
+    User.query.filter_by(mobile=mobile).first()
+    ```
+    5. 如果查询手机号码异常的话,就继续往下走.暂时不管了.!
+    6. 生成手机验证码>!
+        1. 生成随机数.使用random,---> sms_code = "%06d" % random.randint(0, 999999)
+        2. ### 字符串格式符."%06",注意了,6前面的0,意思是,这是一个固定的6位数,如果这个整数不足6位数的话,就自动补充0.
+        3. ### 保存真实验证码内容
+            1. 也是使用setex
