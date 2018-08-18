@@ -44,8 +44,17 @@ function sendSMSCode() {
         $(".phonecode-a").attr("onclick", "sendSMSCode();");
         return;
     }
-    $.get("/api/smscode", {mobile:mobile, code:imageCode, codeId:imageCodeId}, 
+
+    var parse_dict = 
+        {
+        'image_code':imageCode, 
+        'image_code_id':imageCodeId
+    }
+    
+
+    $.get("/api/v1.0/sms_codes/"+mobile,parse_dict, 
         function(data){
+            alert(data.errno)
             if (0 != data.errno) {
                 $("#image-code-err span").html(data.errmsg); 
                 $("#image-code-err").show();
@@ -55,17 +64,29 @@ function sendSMSCode() {
                 $(".phonecode-a").attr("onclick", "sendSMSCode();");
             }   
             else {
-                var $time = $(".phonecode-a");
-                var duration = 60;
+                // var $time = $(".phonecode-a");
+                // var duration = 60;
+                // var intervalid = setInterval(function(){
+                //     $time.html(duration + "秒"); 
+                //     if(duration === 1){
+                //         clearInterval(intervalid);
+                //         $time.html('获取验证码'); 
+                //         $(".phonecode-a").attr("onclick", "sendSMSCode();");
+                //     }
+                //     duration = duration - 1;
+                // }, 1000, 60); 
+                var duration = 60
+                var $time = $(".phonecode-a")
                 var intervalid = setInterval(function(){
-                    $time.html(duration + "秒"); 
-                    if(duration === 1){
+                    $time.html(duration+"秒");
+                    if (duration === 1){
                         clearInterval(intervalid);
-                        $time.html('获取验证码'); 
+                        $time.html("获取验证码");
                         $(".phonecode-a").attr("onclick", "sendSMSCode();");
                     }
-                    duration = duration - 1;
-                }, 1000, 60); 
+                    duration = duration -1; 
+
+                },1000)
             }
     }, 'json'); 
 }

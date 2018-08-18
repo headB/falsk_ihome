@@ -23,7 +23,7 @@ def get_image_code(image_code_id):
     # 生成验证码图片
     # 名字，真实文本， 图片数据
     name, text, image_data = captcha.generate_captcha()
-
+    
     # 将验证码真实值与编号保存到redis中, 设置有效期
     # redis：  字符串   列表  哈希   set
     # "key": xxx
@@ -83,7 +83,8 @@ def get_sms_code(mobile):
         current_app.logger.error(e)
 
     # 与用户填写的值进行对比
-    if real_image_code.lower() != image_code.lower():
+    
+    if real_image_code.decode().lower() != image_code.lower():
         # 表示用户填写错误
         return jsonify(errno=RET.DATAERR, errmsg="图片验证码错误")
 
