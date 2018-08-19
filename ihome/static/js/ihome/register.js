@@ -113,10 +113,10 @@ $(document).ready(function() {
     //拦截表单原来在这个位置,我找到你了.!
     $(".form-register").submit(function(e){
         e.preventDefault();
-        mobile = $("#mobile").val();
-        phoneCode = $("#phonecode").val();
-        passwd = $("#password").val();
-        passwd2 = $("#password2").val();
+        var mobile = $("#mobile").val();
+        var phoneCode = $("#phonecode").val();
+        var passwd = $("#password").val();
+        var passwd2 = $("#password2").val();
         if (!mobile) {
             $("#mobile-err span").html("请填写正确的手机号！");
             $("#mobile-err").show();
@@ -137,15 +137,13 @@ $(document).ready(function() {
             $("#password2-err").show();
             return;
         }
-    });
-
 
     // 调用ajax向后端发送注册请求
     var req_data = {
-        mobile: mobile,
-        sms_code: phoneCode,
-        password: passwd,
-        password2: passwd2,
+        "mobile": mobile,
+        "sms_code": phoneCode,
+        "password": passwd,
+        "password2": passwd2,
     };
     var req_json = JSON.stringify(req_data);
     $.ajax({
@@ -165,6 +163,8 @@ $(document).ready(function() {
                 alert(resp.errmsg);
             }
         }
+    });
+
     });
 
 
