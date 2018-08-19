@@ -54,8 +54,8 @@ function sendSMSCode() {
 
     $.get("/api/v1.0/sms_codes/"+mobile,parse_dict, 
         function(data){
-            alert(data.errno)
             if (0 != data.errno) {
+                alert(data.errno)
                 $("#image-code-err span").html(data.errmsg); 
                 $("#image-code-err").show();
                 if (2 == data.errno || 3 == data.errno) {
@@ -109,6 +109,8 @@ $(document).ready(function() {
     $("#password2").focus(function(){
         $("#password2-err").hide();
     });
+
+    //拦截表单原来在这个位置,我找到你了.!
     $(".form-register").submit(function(e){
         e.preventDefault();
         mobile = $("#mobile").val();
@@ -136,4 +138,34 @@ $(document).ready(function() {
             return;
         }
     });
+
+
+    // 调用ajax向后端发送注册请求
+    var req_data = {
+        mobile: mobile,
+        sms_code: phoneCode,
+        password: passwd,
+        password2: passwd2,
+    };
+    var req_json = JSON.stringify(req_data);
+    $.ajax({
+        url: "/api/v1.0/users",
+        type: "post",
+        data: req_json,
+        contentType: "application/json",
+        dataType: "json",
+        headers: {
+            "X-CSRFToken": getCookie("csrf_token")
+        }, // 请求头，将csrf_token值放到请求中，方便后端csrf进行验证
+        success: function (resp) {
+            if (resp.errno == "0") {
+                // 注册成功，跳转到主页
+                location.href = "/index.html";
+            } else {
+                alert(resp.errmsg);
+            }
+        }
+    });
+
+
 })

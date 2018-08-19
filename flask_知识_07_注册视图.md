@@ -44,3 +44,43 @@
     9. 然后给数据库的手机号码字段设置为唯一字段.
     10. 然后把验证成功的验证码删除,防止用于重复验证.!
     11. ## 
+
+# 前端修改
+
+1. 修改表单
+    1. method用post请求方式
+2. ## 需要拦截表单,因为一些校验步骤需要验证正确之后才可以提交
+    1. ### 为什么这样做?因为表单提交的数据格式不是真正的json格式,需要用ajax格式化一下,用js格式化一下
+    2. ### 拦截表单的方法1就是,绑定表单提交按钮,$("..formxx").submit(function(e){xxx})
+    3. ### 上面的e还有故事,这个代表的是这个行为的描述信息.!
+    4. ### 拦截语句是e.preventDefault()
+    5. ### 关于js拦截的部分知识点
+        1. preventDefault
+            https://www.cnblogs.com/AndrewXu/p/4631521.html
+        2. 关于js中return false、event.preventDefault()和event.stopPropagation()
+            https://www.cnblogs.com/momo798/p/6025777.html
+    6. ### 调用JSON.stringify(xx)将字典转换成为json数据.
+    7. ### 还可以自己定义ajax来写请求,因为需要加入不少的参数,例如需要header加入'Content-Type'='application/json'
+            `$.ajax({url:"/jquery/test1.txt",async:false});`
+            http://www.w3school.com.cn/jquery/ajax_ajax.asp
+            例子
+            ```python
+            $.ajax({
+            url: "/api/v1.0/users",
+            type: "post",
+            data: req_json,
+            contentType: "application/json",
+            dataType: "json",
+            headers: {
+                "X-CSRFToken": getCookie("csrf_token")
+            }, // 请求头，将csrf_token值放到请求中，方便后端csrf进行验证
+            success: function (resp) {
+                if (resp.errno == "0") {
+                    // 注册成功，跳转到主页
+                    location.href = "/index.html";
+                } else {
+                    alert(resp.errmsg);
+                }
+            }
+            ```
+    8. ### 
