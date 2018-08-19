@@ -62,6 +62,7 @@
     6. ### 调用JSON.stringify(xx)将字典转换成为json数据.
     7. ### 还可以自己定义ajax来写请求,因为需要加入不少的参数,例如需要header加入'Content-Type'='application/json'
             `$.ajax({url:"/jquery/test1.txt",async:false});`
+            关于手动使用ajax的一些参数说明
             http://www.w3school.com.cn/jquery/ajax_ajax.asp
             例子
             ```python
