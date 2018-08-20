@@ -92,5 +92,40 @@
     1. 暴力破解,已经有大量的对比密码资料了.!
     2. 数学方法反推!
 2. ## 建议使用sha256
-3. ## 在models那边进行密码加密.
-4. 
+3. ## 在models那边进行密码加密,不在视图那边加密密码了.!
+    1. ### 使用werkzeug的security的generate_password_hash
+    2. ### 在flask里面已经提供了一个函数,用于加密和解密的校验!.
+    3. generate_password_hash的介绍
+        1. method就是加密的方式
+            1. pbkdf2:sha256
+            2. salt_lenth 盐值长度
+            3. 然后返回盐值和计算结果.!
+            4. #### 盐值和密码要放在一起.!
+        2. ### 我观察到的就是,这个加密的步骤写在了models那边去了,然后在外面调用数据库模型类的时候挺方便的.
+            1. 先调用加密的函数.
+            2. 然后将获取到的值再保存到数据库当中就可以了.!
+4. ## 知识点应用,装饰器,@property把函数封装一下,变成属性,可以用于设置值.
+    1.  代码
+    ```python
+    class Student(object):
+
+    @property
+    def score(self):
+        return self._score
+
+    @score.setter
+    def score(self, value):
+        if not isinstance(value, int):
+            raise ValueError('score must be an integer!')
+        if value < 0 or value > 100:
+            raise ValueError('score must between 0 ~ 100!')
+        self._score = value
+    ```
+5. ## 方法有三种:
+    1. 对象方法
+    2. 类方法
+    3. 静态方法
+6. 上面说到的,使用装饰器的问题,现在思考一下,就是,
+    1. 使用property的话,一个涉及到读取问题,一个涉及到设置值的问题
+    2. 如果是涉及到设置数值的话,就需要检查变量,然后再设置数值
+    3. ### 如果都是设置好装饰器这种模式的话,设置保存密码就很方便了.!
