@@ -111,8 +111,8 @@ $(document).ready(function() {
     });
 
     //拦截表单原来在这个位置,我找到你了.!
-    $(".form-register").submit(function(e){
-        e.preventDefault();
+    $(".form-register").submit(function(x){
+        x.preventDefault();
         var mobile = $("#mobile").val();
         var phoneCode = $("#phonecode").val();
         var passwd = $("#password").val();
