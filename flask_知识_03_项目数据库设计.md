@@ -68,6 +68,7 @@
         https://www.cnblogs.com/knowledgesea/p/3667395.html
 
     8. 模型类已经创建好了,现在进行数据库迁移.!
+        重点!三部曲
         1. 使用命令
             ```python
             #第一步
@@ -79,8 +80,10 @@
             ```
         2. 如果显示nodatabase change,解决办法
             1. 在demo导入model.
-        3. 升级,更新(相当于迁移,migrate)
+            
+        3. ## 升级,更新(相当于迁移,migrate)
             ```python
+            #第三步
             python manage.py db upgrade
             ```
     
