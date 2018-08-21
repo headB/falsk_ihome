@@ -38,6 +38,42 @@
 4.  部分代码
     ```python
 
-    file = request.file
+    file1 = request.files.get()
+    file1.read()
 
     ```
+    1. 对对对,单一文件或者进入文件,最好还是设置一下,主文件启动,
+    ```python
+    if __name__ == "__main__":
+        #这种形式
+    ```
+    2. 然后假如图片成功上传了,就得返回数据了,给flask的数据库记录图片的网址.
+    3. 然后调用七牛图片.
+        1. 使用try来捕获异常.
+    4. 对用户对应的id模型类数据库更新头像的图片网址.
+    5. ## flask对数据库进行更新操作
+        1. User.query.filter_by(id=xx).update({"avatar_url":filename})
+        2. session.commit()
+        3. 如果有问题就session.rollback()
+        4. 如果出问题可以记录一下日志
+
+# 图片表单说明
+
+1. ## 只要是传多媒体文件,你都要在form标签里面写`enctype="multipart/form-data"`
+2. 然后input文件的type指明是"file",然后accept="image/*",作用是让用户筛选文件,
+3. 既不想用ajax来处理上传图片的问题,但是普通的浏览器又不能处理
+    1. 这个时候就引入一个插件!
+        1. 引入`jquery.form.min.js`
+        2. ### 还有一个问题,ajax里面的data这个数据,我们无法很方便地定义.
+    2. 不知道为什么,每次绑定表单事件,都会回传一个参数回来,接收这个变量,随便起个什么名字都是可以的.!
+        `e.preventDeafault`
+    3. 调用插件的ajaxSubmit
+        ```python
+        $(this).ajaxSubmit({
+            url: "/api/v1.0/users/avatar",
+            type: "post",
+            dataType: "json",
+            headers: {
+                "X-CSRFToken": getCookie("csrf_token")
+            },
+        ```
