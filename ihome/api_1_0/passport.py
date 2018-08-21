@@ -7,6 +7,7 @@ from ihome import redis_store, db
 from ihome.models import User
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
+from ihome import constants
 import re
 
 
