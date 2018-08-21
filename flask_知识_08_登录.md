@@ -71,4 +71,44 @@
 # 登陆验证装饰器
 1. 个人信息
     1. 闭包的应用.
-    
+2. ## 关于用户认证,用户登陆的问题,想想以前的django,才用的是定义一个自定义的,继承于Login_view的模块.
+    1. ### 然后是添加到urls,因为所有的请求都必须在这里分流,所以在这里添加认证.
+    2. ### 但是项目里面的话,是在具体那个view需要权限的时候才继承这个自定义认证类.
+3. ## 用户认证,flask这里的做法,发酸是在commons.py写一个验证装饰器
+    1. 然后装饰器里面调用了一次去获取session_id的数值
+        1. ### 然后里面的视图函数也想向刚刚的装饰器获取他们的数值.
+            1. 这个时候得借助中间人了,引入中间人,g对象,`from flask import g`,是一个全局变量!.估计是基于session的吧.
+    2. ### 在装饰器的内层函数当再加装装饰器 
+        1. 先导入`import functools`
+        2. `functools.warpper`专门用来装饰内层函数
+        3. 什么是说明文档
+            1. 就是类或者函数里面的一对'''或者"""里面的内容,就是说明文档了.
+            ```python
+            def test():
+                """
+                其实我就是说明文档了.!
+                """
+            ```
+        4. ### 使用装饰器,不应该去改变被装饰的函数,一般默认的装饰方法会修改的
+        ```python
+
+        def test_wrapper(func):
+
+            def test_func(*args,**kwargs):
+                pass
+            return test_func
+
+        def test():
+            """good"""
+            pass
+        
+        print(test.__name__)#这里的值不再等于test了
+        print(test.__doc__)#这里也不存在数值了.
+
+        ```
+        5.  应对上面的办法就是,使用functools去返回被装饰函数的属性,
+        ```python
+        @functools.wraps(func)
+        def wrapper(*args,**kwargs)
+        ```
+    3. 
