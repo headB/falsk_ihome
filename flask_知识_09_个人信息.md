@@ -77,3 +77,16 @@
                 "X-CSRFToken": getCookie("csrf_token")
             },
         ```
+        1. 在另外一端如何接收提交过来的图片呢?
+            1. 后端通过request.files.get("xx")获得的
+    4. ### 重点难点
+        1. 当上传的需求要求可预览、显示上传进度、中断上传过程、大文件分片上传等等，这时传统的表单上传很难实现这些功能，我们可以借助现有插件完成。
+    5. ajaxSubmit
+        1. jQuery使用ajaxSubmit()提交表单示例（转）
+            https://blog.csdn.net/xinghuo0007/article/details/72806717
+            1. jquery.form.js的ajaxSubmit和ajaxForm使用
+                https://www.cnblogs.com/popzhou/p/4338040.html
+    7. 如百度上传插件Web Uploader、jQuery图片预览插件imgPreview 、拖拽上传与图像预览插件Dropzone.js等等，大家可根据项目实际需求选择适合的插件。 
+    8. ### 看一下flask如何保存图片
+        1. 就是直接使用update更新数据的!.
+

@@ -34,7 +34,7 @@ def storage(file_data):
         raise Exception("上传七牛失败")
 
 
-if __name__ == '__main__':
-    with open("./1.png", "rb") as f:
-        file_data = f.read()
-        storage(file_data)
+# if __name__ == '__main__':
+#     with open("./1.png", "rb") as f:
+#         file_data = f.read()
+#         storage(file_data)
