@@ -94,11 +94,12 @@ except Exception as e:
 1. 多个数据库插入数据库,可以一次db.session.add(xx)
     1. 如果先一次性写完,可以写成列表的形式,db.session.add_all([xx1,xx2])
 2. flask更新数据
-    1. db.session.add(xx)
-    2. db.session.commit()
+    1. `db.session.add(xx)`
+    2. `db.session.commit()`
+    3. 或者可以试试直接`User.query.filter_by(id=xx).update({"avatar_url":filename})`
 3. flask删除行
-    1. db.session.delete(xxx)
-    2. db.session.commit()
+    1. `db.session.delete(xxx)`
+    2. `db.session.commit()`
 
 # 保存房屋基本信息前端代码
 1. 什么是serializeArray()
