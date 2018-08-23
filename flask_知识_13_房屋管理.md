@@ -131,3 +131,7 @@
         允许的名字在这个评估包括,除其他方面外,所有类的名称已被创建的声明的基础。
 
     ```
+# SQLAlchemy ORM教程之三：Relationship
+https://www.jianshu.com/p/9771b0a3e589
+# Basic Relationship Patterns
+http://docs.sqlalchemy.org/en/rel_1_0/orm/basic_relationships.html#relationship-patterns
