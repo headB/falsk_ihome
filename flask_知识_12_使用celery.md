@@ -41,22 +41,22 @@
     #引用到celery导入进来的send_sms.delay()
     send_sms.delay()
     ```
-8. # 然后celery这端的任务者,继承上面的发送任务
+8. ## 然后celery这端的任务者,继承上面的发送任务
     ```python
     @celery_app.tasks
     def send_sms(to, datas, temp_id):
         ccp = CCP()
         cpp.send_template_sms(to, datas, temp_id)
     ```
-9. # 关于返回值
+9. ## 关于返回值
     1. ## 不存在,直接告诉用于已经成功了.如果用户收不到短信的话,就直接甩锅吧!
 
-10. # celery的目录结构使用
+10. ## celery的目录结构使用
     1. 如果异步任务比较多,就用目录的方式去管理
     2. 定义启动文件(main.py)
     3. 然后新建一个sms目录,专门用于管理发送短信的
         1. 关于配置文件,可以让参数单独写成一个配置文件.
-    4. ## 然后可以引入配置信息
+    4. ### 然后可以引入配置信息
     ```python
     from celery import Celery
     from ihome.tasks import config
@@ -67,20 +67,20 @@
     ```
     5. 然后在main文件,添加celery_app.autodiscover_tasks(["ihome.tasks.sms"])
 11. 就是,在web中,多使用异步的这种东东.!
-12. # celery独立的目录使用
+12. ## celery独立的目录使用
     1. 假如需要独立的话,仅仅只是依赖云通讯的那几个模块!.
 
-13. # celery接收返回值
+13. ## celery接收返回值
     1. ## 不仅可以用目录的方式定义celery,还可以用工程的方式去定义
     2. 可以将main.py改名为celery.py,cerlery就会自动找到这个主文件了.
     3. 如果有返回值,直接返回
         ```python
         result = ccp.send_template_sms(mobile, [sms_code, int(constants.SMS_CODE_REDIS_EXPIRES/60)], 1)
         ```
-    4. ## 通过get方法获取cerlery异步执行的结果
+    4. ### 通过get方法获取cerlery异步执行的结果
         ```python
         #get方法默认是阻塞的行为,会等到有了执行结果之后才返回
         #get方法也接受参数timeout,超时时间,超过超时时间还拿不到结果,就返回
         ret = result.get()
         ```
-14. # 结束
+14. ## 结束
