@@ -79,6 +79,38 @@
 3. 稍稍补充一下,Flask系列：数据库,一对多,多对多,关系,简书
     1. https://www.jianshu.com/p/0c88017f9b46
     2. 部分摘抄资料
+    >User(用户表)
+    ```python
+        >>> from sqlalchemy import Column, Integer, String
+        >>> class User(Base):
+        ...     __tablename__ = 'users'
+        ...
+        ...     id = Column(Integer, primary_key=True)
+        ...     name = Column(String)
+        ...     fullname = Column(String)
+        ...     password = Column(String)
+        ...
+        ...     def __repr__(self):
+        ...        return "<User(name='%s', fullname='%s', password='%s')>" % ( self.name, self.fullname, self.password)
+
+    ```
+    >
+    ```python
+    >>> from sqlalchemy import ForeignKey
+    >>> from sqlalchemy.orm import relationship, backref
+
+    >>> class Address(Base):
+    ...     __tablename__ = 'addresses'
+    ...     id = Column(Integer, primary_key=True)
+    ...     email_address = Column(String, nullable=False)
+    ...     user_id = Column(Integer, ForeignKey('users.id'))
+    ...
+    ...     user = relationship("User", backref=backref('addresses', order_by=id))
+    ...
+    ...     def __repr__(self):
+    ...         return "<Address(email_address='%s')>" % self.email_address
+    ```
+    #### 解释
     ```python
         上述类使用了ForeignKey函数,它是一个应用于Column的指令,表明这一列的值应该保存指定名称的远程列的值。
         这是关系数据库的一个核心特征,是“胶水”,将原本无关的表变为有丰富的重叠关系的集合。上面的ForeignKey表示，
@@ -98,8 +130,4 @@
         在上面的例子的User类中，一旦所有映射完成,这些字符串被认为是用于产生实际参数的 Python 表达式。
         允许的名字在这个评估包括,除其他方面外,所有类的名称已被创建的声明的基础。
 
-        作者：超net
-        链接：https://www.jianshu.com/p/0c88017f9b46
-        來源：简书
-        简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
     ```
