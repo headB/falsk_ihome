@@ -68,3 +68,19 @@
     5. 然后在main文件,添加celery_app.autodiscover_tasks(["ihome.tasks.sms"])
 11. 就是,在web中,多使用异步的这种东东.!
 12. # celery独立的目录使用
+    1. 假如需要独立的话,仅仅只是依赖云通讯的那几个模块!.
+
+13. # celery接收返回值
+    1. ## 不仅可以用目录的方式定义celery,还可以用工程的方式去定义
+    2. 可以将main.py改名为celery.py,cerlery就会自动找到这个主文件了.
+    3. 如果有返回值,直接返回
+        ```python
+        result = ccp.send_template_sms(mobile, [sms_code, int(constants.SMS_CODE_REDIS_EXPIRES/60)], 1)
+        ```
+    4. ## 通过get方法获取cerlery异步执行的结果
+        ```python
+        #get方法默认是阻塞的行为,会等到有了执行结果之后才返回
+        #get方法也接受参数timeout,超时时间,超过超时时间还拿不到结果,就返回
+        ret = result.get()
+        ```
+14. # 结束
