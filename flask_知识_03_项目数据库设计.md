@@ -67,7 +67,7 @@
     7. 数据库设计范式
         https://www.cnblogs.com/knowledgesea/p/3667395.html
 
-    8. 模型类已经创建好了,现在进行数据库迁移.!
+    8. 模型类已经创建好了,现在进行数据库迁移.!创建数据库.create database table
         重点!三部曲
         1. 使用命令
             ```python
