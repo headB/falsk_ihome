@@ -76,5 +76,20 @@
             |secondary |指定 多对多 关系中关系表的名字
             |secondaryjoin |SQLAlchemy 无法自行决定时,指定多对多关系中的二级联结条件|
             
-        6. 
-        
+3. 稍稍补充一下,Flask系列：数据库,一对多,多对多,关系,简书
+    1. https://www.jianshu.com/p/0c88017f9b46
+    2. 部分摘抄资料
+    ```python
+        上述类使用了ForeignKey函数,它是一个应用于Column的指令,表明这一列的值应该保存指定名称的远程列的值。这是关系数据库的一个核心特征,是“胶水”,将原本无关的表变为有丰富的重叠关系的集合。上面的ForeignKey表示，Addresses.user_id列的值应该等于users.id列中的值，即，users的主键。
+
+        第二个函数,称为relationship(), 它告诉 ORM ,Address类本身应该使用属性Address.user链接到User类。relationship()使用两个表之间的外键关系来确定这个链接的性质，这个例子中，确定Address.user将要成为多对一中多的一侧。relationship()的参数中有一个称为backref()的relationship()的子函数，反向提供详细的信息, 即在users中添加User对应的Address对象的集合，保存在User.addresses中。多对一关系的反向始终是一对多的关系。一个完整的可用的relationship()配置目录在基本关系模式。
+
+        两个互补关系, Address.user和User.addresses被称为一个双向关系，并且这是SQLAlchemy ORM的一个关键特性。小节Linking Relationships with Backref详细讨论了“Backref”特性。
+
+        relationship()的参数中，关联的远程类可以通过字符串指定,如果声明系统在使用。在上面的例子的User类中，一旦所有映射完成,这些字符串被认为是用于产生实际参数的 Python 表达式。允许的名字在这个评估包括,除其他方面外,所有类的名称已被创建的声明的基础。
+
+        作者：超net
+        链接：https://www.jianshu.com/p/0c88017f9b46
+        來源：简书
+        简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
+    ```
