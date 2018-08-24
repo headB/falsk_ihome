@@ -42,6 +42,8 @@ class Child(Base):
 Child将获得parent具有多对一语义的属性。
 
 或者，该backref选项可用于单个relationship()而不是使用 back_populates：
+重点！这个backref,原来只是一个名字而已！
+![image.png](https://upload-images.jianshu.io/upload_images/4151356-03874685b6eb8b10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ```python
 class Parent(Base):
