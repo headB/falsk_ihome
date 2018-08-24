@@ -113,4 +113,64 @@
             4. flask数据库里面的filter_by用法，House.query.filter_by(user_id=user_id)，这个就是才用关键字了。Models模块里面的House模型类的确存在一个user_id这个字段
             5. 
 
-2. ## 
+2. ## 然后就是排序
+    1. 按照传递过来的参数
+
+# 房屋列表页分页补充与测试
+1. page的使用(前期准备)
+    1. 在flask中使用分页更加的方便，直接在查询结果后面添加就可以了
+        1. example:`paginate = User.query.order_by("-id").paginate()`
+    2. 处理分页
+        1. page_data = paginate.items
+        2. 代码
+        ```python
+        page_obj = User.query.order_by("-id").paginate(page=page,per_page=x,error_out=False)
+        ```
+    3. 获取页面数据`house_li = page_obj.items`
+        1. 转换成为字典的形式
+            1. 代码
+            ```python
+            house_li = page_obj.items
+            houses = []
+            for house in house_li:
+                houses.append(house.to_base_dict()) ## 恩恩，to_base_dict是定义在models里面的
+            
+            #同时返回总页数
+            total_page = page_obj.pages
+
+            return jsonify("xxx")
+            ```
+# 解析_等好参数，也就是，我不理解的条件查询
+1. `House.area_id == area_id`这个，filter，条件表达式，实质他是一个`BinaryExpression object`
+2. 所以，这不是普通的用法
+3.  `House.area_id == area_id` 等价于 `House.area_id.__eq__(1)`
+
+# 房屋列表页缓存处理
+1. 
+
+# redis的pipeline的使用
+1. ## 重要
+    1. 恩恩。很类似linux的shell的管道命令，就是，一次性可以执行多个操作
+    2. 使用，代码
+    ```python
+    #创建管道对象，可以一次性执行多个语句
+    pipeline = redis_store.pipeline()
+    #开启多个语句的记录
+    pipeline.multi()
+
+    pipeline.hset(redis_key,page,resp_json)
+    pipeline.expire(redis_key,xxx)
+
+    #然后执行
+    pipeline.execute()
+
+    ```
+
+# 前端编写
+1. 随着滚动，不断加载数据
+    1. 在前端会设置页数，当前页，总页数，
+    2. 填充页面
+        1. 请求了新的页面数据，形式是追加
+        2. 还有一种
+            1. 如果改变了条件，就重新填充了。
+    3. 
