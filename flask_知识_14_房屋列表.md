@@ -192,7 +192,7 @@
     语法
     array.reduce(function(total, currentValue, currentIndex, arr), initialValue)
     参数
-    |参数 |	描述|
+    参数 	描述
     function(total,currentValue, index,arr)	必需。用于执行每个数组元素的函数。
     函数参数:
     |参数 |	描述|
