@@ -176,6 +176,8 @@
 2. 部分代码
     1. 代码-解析url中的查询字符串
     ```js
+
+
     function decodeQuery(){
         var search = decodeURI(document.location.search);
         return search.replace(/(^\?)/, '').split('&').reduce(function(result, item){
@@ -185,7 +187,22 @@
         }, {});
     }
     ```
-    2. 当文档加载好了以后的工作流程
+    2. 部分介绍
+    ```python
+    语法
+    array.reduce(function(total, currentValue, currentIndex, arr), initialValue)
+    参数
+    参数	描述
+    function(total,currentValue, index,arr)	必需。用于执行每个数组元素的函数。
+    函数参数:
+    参数	描述
+    total	必需。初始值, 或者计算结束后的返回值。
+    currentValue	必需。当前元素
+    currentIndex	可选。当前元素的索引
+    arr	可选。当前元素所属的数组对象。
+    initialValue	可选。传递给函数的初始值
+    ```
+    2. ## 当文档加载好了以后的工作流程
     ```js
     $(document).ready(function(){
     var queryData = decodeQuery();
@@ -199,3 +216,44 @@
     $(".filter-title-bar>.filter-title").eq(1).children("span").eq(0).html(areaName);
 
     ```
+    3. js如何获取当前url地址信息,如何获取url地址参数
+        1. document.location."当前页后缀",例如`document.location.search`
+    4. decodeURL
+        1. decodeURI() 函数可对 encodeURI() 函数编码过的 URI 进行解码。
+            1. 实例
+            ```python
+            #在本例中，我们将使用 decodeURI() 对一个编码后的 URI 进行解码：
+            <script type="text/javascript">
+            var test1="http://www.w3school.com.cn/My first/"
+            document.write(encodeURI(test1)+ "<br />")
+            document.write(decodeURI(test1))
+            </script>
+            #输出：
+            http://www.w3school.com.cn/My%20first/
+            http://www.w3school.com.cn/My first/
+            ```
+        2. decodeURI与decodeURIComponent区别
+            https://www.cnblogs.com/hamsterPP/p/7131163.html
+
+        3. js的reduce用法
+            1. reduce() 方法接收一个函数作为累加器，数组中的每个值（从左到右）开始缩减，最终计算为一个值。
+            2. 实例
+            ```js
+            var numbers = [65, 44, 12, 4];
+            function getSum(total, num) {
+                return total + num;
+            }
+            function myFunction(item) {
+                document.getElementById("demo").innerHTML = numbers.reduce(getSum);
+            }
+            #结果125
+            ```
+    3. ## 后续
+        1. each的用法
+        ```python
+        var arr = [ "one", "two", "three", "four"];     
+        $.each(arr, function(){     
+            alert(this);     
+        });   
+        ```
+    4. 
