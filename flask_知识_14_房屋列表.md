@@ -173,4 +173,29 @@
         1. 请求了新的页面数据，形式是追加
         2. 还有一种
             1. 如果改变了条件，就重新填充了。
-    3. 
+2. 部分代码
+    1. 代码-解析url中的查询字符串
+    ```js
+    function decodeQuery(){
+        var search = decodeURI(document.location.search);
+        return search.replace(/(^\?)/, '').split('&').reduce(function(result, item){
+            values = item.split('=');
+            result[values[0]] = values[1];
+            return result;
+        }, {});
+    }
+    ```
+    2. 当文档加载好了以后的工作流程
+    ```js
+    $(document).ready(function(){
+    var queryData = decodeQuery();
+    var startDate = queryData["sd"];
+    var endDate = queryData["ed"];
+    $("#start-date").val(startDate);
+    $("#end-date").val(endDate);
+    updateFilterDateDisplay();
+    var areaName = queryData["aname"];
+    if (!areaName) areaName = "位置区域";
+    $(".filter-title-bar>.filter-title").eq(1).children("span").eq(0).html(areaName);
+
+    ```
