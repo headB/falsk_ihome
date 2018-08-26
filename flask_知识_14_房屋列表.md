@@ -176,8 +176,6 @@
 2. 部分代码
     1. 代码-解析url中的查询字符串
     ```js
-
-
     function decodeQuery(){
         var search = decodeURI(document.location.search);
         return search.replace(/(^\?)/, '').split('&').reduce(function(result, item){
@@ -187,6 +185,20 @@
         }, {});
     }
     ```
+3. # `2018年8月26日补充`
+    1. 页面加载好了,就提取url的参数,去获取后台数据
+    2. ## 稍微详细一点点说明上面的流程
+        1. 首先,flask根据前端传送过来的请求,加载search.html,这个页面都是纯的html+css+js,此时并没有向后台查询数据
+        2. 然后当加载到js部分的时候,就进行了一系列的操作
+            1. 首选是根据当前页面的url参数,整理了一下
+            2. 然后这个时候才正式向后端查询当前的房屋情况.get请求.
+    3. ## 改变当前的搜索条件
+        1. ### 如果重新点击时间,位置和指定选项,如何做出改变呢
+        2. 答案就是
+            1. #### 前端写了一个空白区域的监听,$("display-mask")
+            2. 当这个区域被选中,被点击,就意味着需要重新搜索了.
+
+
     2. 部分介绍
     
         语法
@@ -250,12 +262,12 @@
             }
             #结果125
             ```
-    3. ## 后续
+    5. ## 后续
         1. each的用法
-        ```python
-        var arr = [ "one", "two", "three", "four"];     
-        $.each(arr, function(){     
-            alert(this);     
-        });   
+        ```js
+        var arr = [ "one", "two", "three", "four"];
+        $.each(arr, function(){
+            alert(this);
+        });
         ```
-    4. 
+    6. 1
